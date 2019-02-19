@@ -45,10 +45,11 @@ func BenchmarkMergeSorts(b *testing.B) {
 	// Async benchmark
 	b.Run("Merge sort async", func(b *testing.B) {
 		for i := 0; i < b.N; i++ {
+			b.StopTimer()
 			for i := 0; i < len(arr); i++ {
 				arr[i] = rand.Int()
 			}
-			b.ResetTimer()
+			b.StartTimer()
 
 			dummyChannel := make(chan int, 1)
 			mergeSort(arr[:], 0, len(arr)-1, dummyChannel)
@@ -59,10 +60,11 @@ func BenchmarkMergeSorts(b *testing.B) {
 	// Sync benchmark
 	b.Run("Merge sort sync", func(b *testing.B) {
 		for i := 0; i < b.N; i++ {
+			b.StopTimer()
 			for i := 0; i < len(arr); i++ {
 				arr[i] = rand.Int()
 			}
-			b.ResetTimer()
+			b.StartTimer()
 
 			mergeSortSync(arr[:], 0, len(arr)-1)
 		}
